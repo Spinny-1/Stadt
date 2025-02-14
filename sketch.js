@@ -30,6 +30,7 @@ function draw() {
     mask.background(0);
     mask.noStroke();
   
+    // Maske erstellen, die mit der Maus interagiert
     for (let r = int(maskRadius); r > 0; r--) {
       let alpha = map(r, 0, maskRadius, 255, 0);
       mask.fill(255, alpha);
@@ -38,7 +39,9 @@ function draw() {
 
     mask.endDraw();
 
-    let maskedImage = image2.copy();
+    // Maskiertes Bild von StadtPost erstellen und auf die Maske anwenden
+    let maskedImage = createImage(width, height);
+    maskedImage.copy(image2, 0, 0, image2.width, image2.height, 0, 0, width, height);
     maskedImage.mask(mask);
     image(maskedImage, 0, 0);
   }
