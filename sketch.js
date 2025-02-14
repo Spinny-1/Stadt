@@ -22,19 +22,23 @@ function draw() {
   } else if (mode === 2) {
     image(image2, 0, 0);  // Bild 2 anzeigen
   } else if (mode === 3) {
-    // Bild 2 wird hinter Bild 1 gezeichnet
+    // Bild 2 wird im Hintergrund angezeigt
     image(image2, 0, 0);  // Bild 2 im Hintergrund
-    image(image1, 0, 0);  // Bild 1 im Vordergrund
 
-    // Ellipse nur im Modus 3 zeichnen und Bild 1 durch Bild 2 ersetzen
-    fill(0, 100, 255, 150);  // Blau mit transparenter Füllung
-    noStroke();  // Kein Rand
-    ellipse(mouseX, mouseY, ellipseSize, ellipseSize);  // Ellipse mit Größe
-    
-    // Überlagertes Bild: Bild 2 wird an der Stelle der Ellipse angezeigt
-    let x = mouseX - ellipseSize / 2;
-    let y = mouseY - ellipseSize / 2;
-    image(image2, x, y, ellipseSize, ellipseSize);  // Bild 2 an Ellipsen-Position
+    // Erstelle eine Maske für Bild 1
+    let maskImg = createGraphics(width, height);  // Neue Maske erstellen
+    maskImg.beginDraw();
+    maskImg.background(0);  // Schwarzer Hintergrund (unsichtbar)
+    maskImg.fill(255);  // Weiße Farbe für den Bereich, der sichtbar bleibt
+    maskImg.noStroke();
+    maskImg.ellipse(mouseX, mouseY, ellipseSize, ellipseSize);  // Ellipse an der Mausposition
+    maskImg.endDraw();
+
+    // Wende die Maske auf Bild 1 an, sodass der Bereich des Kreises durch Bild 2 ersetzt wird
+    image1.mask(maskImg);  // Maskiere Bild 1 mit der Maske
+
+    // Bild 1 anzeigen, aber mit der Maske angewendet
+    image(image1, 0, 0);  
   }
 }
 
