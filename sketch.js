@@ -103,7 +103,7 @@ function drawHelpText() {
   rect(width - 160, 20, 150, 40, 10);
   fill(255);
   textSize(20);
-   text("F11 Vollbild", width - 140, 40);
+   text("F11 Vollbild", width - 140, 50);
 }
 
 function keyPressed() {
