@@ -111,10 +111,13 @@ function keyPressed() {
   } else if (key === 'h' || key === 'H') {
     showHelp = !showHelp;  // Hilfe ein- oder ausblenden
   } else if (keyCode === 122) {  // F11-Taste
-    resizeCanvas(windowWidth, windowHeight);  // Canvas-Größe neu anpassen
-    image1.resize(width, height);  // Bilder neu skalieren
-    image2.resize(width, height);  // Bilder neu skalieren
-    pg = createGraphics(width, height);  // PGraphics neu erstellen
-    pg.image(image1, 0, 0);  // Bild 1 in PGraphics neu laden
+    // 2-Sekunden-Delay, bevor die Canvas-Größe und Bilder neu skaliert werden
+    setTimeout(() => {
+      resizeCanvas(windowWidth, windowHeight);  // Canvas-Größe neu anpassen
+      image1.resize(width, height);  // Bilder neu skalieren
+      image2.resize(width, height);  // Bilder neu skalieren
+      pg = createGraphics(width, height);  // PGraphics neu erstellen
+      pg.image(image1, 0, 0);  // Bild 1 in PGraphics neu laden
+    }, 2000);  // 2000 ms = 2 Sekunden
   }
 }
