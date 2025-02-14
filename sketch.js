@@ -24,24 +24,27 @@ function draw() {
     // Modus 3: Bild 1 im Hintergrund und Bild 2 immer sichtbar
     image(image2, 0, 0);  // Bild 2 im Hintergrund
 
-    // Bild 1 temporär bearbeiten, um Transparenz zu setzen
-    image1.loadPixels();  // Lade die Pixel von Bild 1
+    // Temporär transparenten Bereich für Bild 1 definieren
+    let maskImage = createImage(image1.width, image1.height); // Neue Maske erstellen
+    maskImage.loadPixels(); // Lade die Pixel der Maske
 
-    for (let x = mouseX - maskSize / 2; x < mouseX + maskSize / 2; x++) {
-      for (let y = mouseY - maskSize / 2; y < mouseY + maskSize / 2; y++) {
+    // Erstelle die Maske basierend auf dem Mausbereich
+    for (let x = 0; x < maskImage.width; x++) {
+      for (let y = 0; y < maskImage.height; y++) {
         let d = dist(x, y, mouseX, mouseY);  // Berechne den Abstand zum Mauszeiger
-        if (d < maskSize / 2 && x >= 0 && x < width && y >= 0 && y < height) {
-          let index = (x + y * width) * 4;  // Berechne den Pixel-Index
-          image1.pixels[index + 3] = 0;  // Setze den Alpha-Wert auf 0 (transparent)
+        if (d < maskSize / 2) {
+          maskImage.set(x, y, color(0, 0, 0, 0));  // Setze Pixel innerhalb des Mausradius auf transparent
+        } else {
+          maskImage.set(x, y, color(255, 255, 255, 255));  // Alle anderen Pixel bleiben sichtbar
         }
       }
     }
+    maskImage.updatePixels();  // Wende die Änderungen auf das Maskenbild an
+    image1.mask(maskImage);  // Wende die Maske auf Bild 1 an
 
-    image1.updatePixels();  // Update die Pixel von Bild 1
+    image(image1, 0, 0);  // Zeichne Bild 1 mit der Maske (Transparenz nur in Mausbereich)
 
-    image(image1, 0, 0);  // Zeichne Bild 1 mit der temporären Transparenz
-
-    // Bild 1 ist jetzt mit transparenter Stelle bei der Mausposition, aber wir müssen keine weiteren Änderungen an image1 vornehmen.
+    // Bild 2 ist immer im Hintergrund sichtbar
   }
 }
 
