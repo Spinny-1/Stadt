@@ -118,6 +118,6 @@ function keyPressed() {
       image2.resize(width, height);  // Bilder neu skalieren
       pg = createGraphics(width, height);  // PGraphics neu erstellen
       pg.image(image1, 0, 0);  // Bild 1 in PGraphics neu laden
-    }, 1000);  // 2000 ms = 2 Sekunden
+    }, 500);  // 2000 ms = 2 Sekunden
   }
 }
