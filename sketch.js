@@ -40,16 +40,18 @@ function draw() {
     let endX = min(mouseX + maskSize / 2, windowWidth);
     let startY = max(mouseY - maskSize / 2, 0);
     let endY = min(mouseY + maskSize / 2, windowHeight);
-
+    let aspectRatio = width / height;
+    
     for (let x = startX; x < endX; x++) {
-      for (let y = startY; y < endY; y++) {
-        let d = dist(x, y, mouseX, mouseY);  // Berechne den Abstand zum Mauszeiger
-        let index = (x + y * windowWidth) * 4;  // Berechne den Pixel-Index
+  for (let y = startY; y < endY; y++) {
+    let dx = (x - mouseX) / aspectRatio;  // Skaliert die X-Distanz
+    let dy = y - mouseY;  // Y-Distanz bleibt gleich
+    let d = sqrt(dx * dx + dy * dy);  // Korrigierte Distanzberechnung
+    let index = (x + y * width) * 4;
 
-        if (d < maskSize / 2) {
-          // Innerhalb des Radius: Setze den Alpha-Wert auf 0 (transparent)
-          pg.pixels[index + 3] = 0;
-        }
+    if (d < maskSize / 2) {
+      pg.pixels[index + 3] = 0;
+    }
       }
     }
 
