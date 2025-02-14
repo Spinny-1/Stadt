@@ -19,12 +19,12 @@ function setup() {
   
   noCursor();  // Mauszeiger ausblenden
   console.log("Canvas Size:", width, height);
-console.log("Mouse Position:", mouseX, mouseY);
 console.log("Pixel Density:", pixelDensity());
 }
 
 function draw() {
   background(255);  // Hintergrund auf weiß setzen
+  console.log("Mouse Position:", mouseX, mouseY);
 
   if (mode === 1) {
     image(image1, 0, 0);  // Modus 1: Bild 1 anzeigen
