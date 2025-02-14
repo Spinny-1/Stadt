@@ -10,7 +10,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);  // Leinwand erstellen
+  createCanvas(1920, 1080);  // Leinwand erstellen
   image1.resize(width, height);  // Bild 1 skalieren
   image2.resize(width, height);  // Bild 2 skalieren
 
@@ -30,7 +30,7 @@ function draw() {
   } else if (mode === 3) {
     // Modus 3: Bild 1 im Hintergrund und Bild 2 immer sichtbar
     image(image2, 0, 0);  // Bild 2 im Hintergrund
-    
+
     // Temporäre Maske im PGraphics bearbeiten
     pg.image(image1, 0, 0);  // Originalbild zurückladen, um den Zustand zu resetten
     pg.loadPixels();  // Lade die Pixel des temporären Bildes
@@ -46,7 +46,7 @@ function draw() {
         let d = dist(x, y, mouseX, mouseY);  // Berechne den Abstand zum Mauszeiger
         let index = (x + y * width) * 4;  // Berechne den Pixel-Index
 
-        if (d < / 2) {
+        if (d < maskSize / 2) {
           // Innerhalb des Radius: Setze den Alpha-Wert auf 0 (transparent)
           pg.pixels[index + 3] = 0;
         }
