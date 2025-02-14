@@ -1,6 +1,6 @@
 let image1, image2;
 let mode = 1;  // Modus-Variable: 1 = Bild 1, 2 = Bild 2, 3 = Modus 3
-let maskSize;  // Größe der Maske, um Bild 1 transparent zu machen
+let maskSize = 200;  // Größe der Maske, um Bild 1 transparent zu machen
 let pg;
 let showHelp = false;  // Flag für das Ein- und Ausblenden der Hilfe
 
@@ -15,8 +15,7 @@ function setup() {
   image1.resize(width, height);  // Bild 1 skalieren
   image2.resize(width, height);  // Bild 2 skalieren
 
-  // Maske relativ zur kleineren Fensterdimension (z.B. 10% der kleineren Dimension)
-  maskSize = min(width, height) * 0.1;
+  // Maske relativ zur kleineren Fensterdimension (z.B. 10% der kleineren Dimension
 
   pg = createGraphics(width, height);  // PGraphics für temporäre Bearbeitung
   pg.image(image1, 0, 0);  // Bild 1 in PGraphics laden
