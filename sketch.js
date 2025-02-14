@@ -21,7 +21,6 @@ function setup() {
   console.log("Canvas Size:", width, height);
 console.log("Mouse Position:", mouseX, mouseY);
 console.log("Pixel Density:", pixelDensity());
-
 }
 
 function draw() {
@@ -41,27 +40,21 @@ function draw() {
 
     // Berechne nur den Bereich um die Maus herum
     let startX = max(mouseX - maskSize / 2, 0);
-    let endX = min(mouseX + maskSize / 2, windowWidth);
+    let endX = min(mouseX + maskSize / 2, width);
     let startY = max(mouseY - maskSize / 2, 0);
-    let endY = min(mouseY + maskSize / 2, windowHeight);
-    
-    
-   let aspectRatio = height / width;  // ACHTUNG: Jetzt height/width statt umgekehrt!
+    let endY = min(mouseY + maskSize / 2, height);
 
-for (let x = startX; x < endX; x++) {
-  for (let y = startY; y < endY; y++) {
-    let dx = x - mouseX;
-    let dy = (y - mouseY) * aspectRatio;  // Skaliert Y-Distanz basierend auf dem Seitenverhältnis
-    let d = sqrt(dx * dx + dy * dy);
-    let index = (x + y * width) * 4;
+    for (let x = startX; x < endX; x++) {
+      for (let y = startY; y < endY; y++) {
+        let d = dist(x, y, mouseX, mouseY);  // Berechne den Abstand zum Mauszeiger
+        let index = (x + y * width) * 4;  // Berechne den Pixel-Index
 
-    if (d < maskSize / 2) {
-      pg.pixels[index + 3] = 0;
+        if (d < maskSize / 2) {
+          // Innerhalb des Radius: Setze den Alpha-Wert auf 0 (transparent)
+          pg.pixels[index + 3] = 0;
+        }
+      }
     }
-  }
-}
-
-
 
     pg.updatePixels();  // Update der Pixel des temporären Bildes
 
