@@ -32,7 +32,6 @@ function draw() {
     image(image2, 0, 0);  // Bild 2 im Hintergrund
     
     // Temporäre Maske im PGraphics bearbeiten
-    pg.clear();
     pg.image(image1, 0, 0, width, height);  // Originalbild zurückladen, um den Zustand zu resetten
     pg.loadPixels();  // Lade die Pixel des temporären Bildes
 
