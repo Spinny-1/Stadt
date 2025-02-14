@@ -16,6 +16,11 @@ function setup() {
 function draw() {
   background(255);  // Hintergrund auf weiß setzen
   image(currentImage, 0, 0);  // Das aktuelle Bild anzeigen
+  
+  // Ellipse an der Mausposition zeichnen
+  fill(0, 100, 255, 150);  // Blau mit transparenter Füllung
+  noStroke();  // Kein Rand
+  ellipse(mouseX, mouseY, 100, 100);  // Ellipse mit 100px Durchmesser
 }
 
 function keyPressed() {
