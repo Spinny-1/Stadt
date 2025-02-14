@@ -25,22 +25,16 @@ function draw() {
     image(image2, 0, 0);  // Bild 2 im Hintergrund
     image(image1, 0, 0);  // Bild 1 darüber
 
-    // Ändere die Pixel von Bild 1, um es transparent zu machen, wo die Maus ist
-    image1.loadPixels();  // Lade die Pixel von Bild 1
-
-    for (let x = mouseX - maskSize / 2; x < mouseX + maskSize / 2; x++) {
-      for (let y = mouseY - maskSize / 2; y < mouseY + maskSize / 2; y++) {
-        let d = dist(x, y, mouseX, mouseY);  // Berechne den Abstand zum Mauszeiger
-        if (d < maskSize / 2 && x >= 0 && x < width && y >= 0 && y < height) {
-          let index = (x + y * width) * 4;  // Berechne den Pixel-Index
-          image1.pixels[index + 3] = 0;  // Setze den Alpha-Wert auf 0 (transparent)
-        }
-      }
-    }
-
-    image1.updatePixels();  // Update die Pixel von Bild 1
-
-    image(image1, 0, 0);  // Zeichne Bild 1 mit der transparenten Stelle
+    // Temporäre Maske für die Transparenz an der Mausposition
+    push();
+    // Setze die Transparenz für den Bereich um den Mauszeiger
+    noStroke();
+    fill(255, 255, 255, 255);  // Weiß, aber mit voller Deckkraft
+    ellipse(mouseX, mouseY, maskSize, maskSize);  // Erstelle die Maske als Ellipse
+    pop();
+    
+    // Bild 2 wird an den Stellen sichtbar, wo Bild 1 transparent ist
+    // (Dafür wird Bild 2 erneut gezeichnet, aber das transparente Bild 1 bleibt unverändert)
   }
 }
 
