@@ -12,8 +12,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);  // Leinwand erstellen
   pixelDensity(1);
-  image1.resize(width, height);  // Bild 1 skalieren
-  image2.resize(width, height);  // Bild 2 skalieren
+  
 
   pg = createGraphics(width, height);  // PGraphics für temporäre Bearbeitung
   pg.image(image1, 0, 0);  // Bild 1 in PGraphics laden
@@ -26,12 +25,12 @@ function draw() {
   background(255);  // Hintergrund auf weiß setzen
 
   if (mode === 1) {
-    image(image1, 0, 0);  // Modus 1: Bild 1 anzeigen
+    image(image1, 0, 0, width, height);  // Modus 1: Bild 1 anzeigen
   } else if (mode === 2) {
-    image(image2, 0, 0);  // Modus 2: Bild 2 anzeigen
+    image(image2, 0, 0, width, height);  // Modus 2: Bild 2 anzeigen
   } else if (mode === 3) {
     // Modus 3: Bild 1 im Hintergrund und Bild 2 immer sichtbar
-    image(image2, 0, 0);  // Bild 2 im Hintergrund
+    image(image2, 0, 0, width, height);  // Bild 2 im Hintergrund
 
     // Temporäre Maske im PGraphics bearbeiten
     pg.image(image1, 0, 0);  // Originalbild zurückladen, um den Zustand zu resetten
@@ -58,7 +57,7 @@ function draw() {
     pg.updatePixels();  // Update der Pixel des temporären Bildes
 
     // Zeichne das temporäre Bild mit der Transparenz
-    image(pg, 0, 0);
+    image(pg, 0, 0, width, height);
   }
 
   // Hilfe und Modus-Text zeichnen
