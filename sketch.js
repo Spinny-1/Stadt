@@ -42,11 +42,13 @@ function draw() {
     let endY = min(mouseY + maskSize / 2, windowHeight);
     
     
-   let scaleFactor = width / height;  // Verhältnis von Breite zu Höhe
+   let aspectRatio = height / width;  // ACHTUNG: Jetzt height/width statt umgekehrt!
 
 for (let x = startX; x < endX; x++) {
   for (let y = startY; y < endY; y++) {
-    let d = dist(x, y * scaleFactor, mouseX, mouseY * scaleFactor);  // Skalierte Distanzberechnung
+    let dx = x - mouseX;
+    let dy = (y - mouseY) * aspectRatio;  // Skaliert Y-Distanz basierend auf dem Seitenverhältnis
+    let d = sqrt(dx * dx + dy * dy);
     let index = (x + y * width) * 4;
 
     if (d < maskSize / 2) {
@@ -54,6 +56,7 @@ for (let x = startX; x < endX; x++) {
     }
   }
 }
+
 
 
     pg.updatePixels();  // Update der Pixel des temporären Bildes
