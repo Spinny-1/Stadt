@@ -10,7 +10,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1920, 1080);  // Leinwand erstellen
+  createCanvas(windowWidth, windowHeight);  // Leinwand erstellen
   image1.resize(width, height);  // Bild 1 skalieren
   image2.resize(width, height);  // Bild 2 skalieren
 
@@ -37,14 +37,14 @@ function draw() {
 
     // Berechne nur den Bereich um die Maus herum
     let startX = max(mouseX - maskSize / 2, 0);
-    let endX = min(mouseX + maskSize / 2, width);
+    let endX = min(mouseX + maskSize / 2, windowWidth);
     let startY = max(mouseY - maskSize / 2, 0);
-    let endY = min(mouseY + maskSize / 2, height);
+    let endY = min(mouseY + maskSize / 2, windowHeight);
 
     for (let x = startX; x < endX; x++) {
       for (let y = startY; y < endY; y++) {
         let d = dist(x, y, mouseX, mouseY);  // Berechne den Abstand zum Mauszeiger
-        let index = (x + y * width) * 4;  // Berechne den Pixel-Index
+        let index = (x + y * windowWidth) * 4;  // Berechne den Pixel-Index
 
         if (d < maskSize / 2) {
           // Innerhalb des Radius: Setze den Alpha-Wert auf 0 (transparent)
