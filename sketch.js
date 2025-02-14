@@ -61,7 +61,7 @@ function draw() {
 
   // Hilfe und Modus-Text zeichnen
   drawModeText();
-  if (showHelp) {
+  if (!showHelp) {
     drawHelpText();
   }
 }
