@@ -10,7 +10,20 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1920, 1080);  // Leinwand erstellen
+  let targetAspect = 1920 / 1080;
+  let screenAspect = windowWidth / windowHeight;
+  let canvasWidth, canvasHeight;
+
+  if (screenAspect > targetAspect) {
+    canvasHeight = windowHeight;
+    canvasWidth = canvasHeight * targetAspect;
+  } else {
+    canvasWidth = windowWidth;
+    canvasHeight = canvasWidth / targetAspect;
+  }
+
+  createCanvas(canvasWidth, canvasHeight);
+
   image1.resize(width, height);  // Bild 1 skalieren
   image2.resize(width, height);  // Bild 2 skalieren
 
