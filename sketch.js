@@ -2,6 +2,7 @@ let image1, image2;
 let mode = 1;  // Modus-Variable: 1 = Bild 1, 2 = Bild 2, 3 = Modus 3
 let maskSize = 250;  // Größe der Maske, um Bild 1 transparent zu machen
 let pg;
+let showHelp = false;  // Flag für das Ein- und Ausblenden der Hilfe
 
 function preload() {
   image1 = loadImage("StadtPast.png");  // Bild 1 laden
@@ -57,6 +58,36 @@ function draw() {
     // Zeichne das temporäre Bild mit der Transparenz
     image(pg, 0, 0);
   }
+
+  // Hilfe und Modus-Text zeichnen
+  drawModeText();
+  if (showHelp) {
+    drawHelpText();
+  }
+}
+
+// Funktion zum Zeichnen des Modus-Texts
+function drawModeText() {
+  textSize(24);
+  fill(0);
+  noStroke();
+  
+  if (mode === 1) {
+    text("Modus 1: Bild 1 anzeigen", 20, height - 40);
+  } else if (mode === 2) {
+    text("Modus 2: Bild 2 anzeigen", 20, height - 40);
+  } else if (mode === 3) {
+    text("Modus 3: Bild 1 mit Bild 2 und Maske", 20, height - 40);
+  }
+}
+
+// Funktion zum Zeichnen des Hilfetexts
+function drawHelpText() {
+  textSize(18);
+  fill(0);
+  noStroke();
+  textAlign(LEFT, TOP);
+  text("Hilfe:\n- Taste '1': Bild 1 anzeigen\n- Taste '2': Bild 2 anzeigen\n- Taste '3': Modus 3\n- Bewege die Maus, um den transparenten Bereich zu steuern\n- Taste 'H': Hilfe ein/ausblenden", 20, 20);
 }
 
 function keyPressed() {
@@ -66,5 +97,7 @@ function keyPressed() {
     mode = 2;  // In Modus 2 wechseln (Bild 2)
   } else if (key === '3') {
     mode = 3;  // In Modus 3 wechseln (Bild 1 und Bild 2 an Mausposition)
+  } else if (key === 'h' || key === 'H') {
+    showHelp = !showHelp;  // Hilfe ein- oder ausblenden
   }
 }
