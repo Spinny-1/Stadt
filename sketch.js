@@ -68,26 +68,41 @@ function draw() {
 
 // Funktion zum Zeichnen des Modus-Texts
 function drawModeText() {
-  textSize(24);
-  fill(0);
-  noStroke();
-  
+  let modeText = "";
   if (mode === 1) {
-    text("Modus 1: Bild 1 anzeigen", 20, height - 40);
+    modeText = "StadtGegenwart";
   } else if (mode === 2) {
-    text("Modus 2: Bild 2 anzeigen", 20, height - 40);
-  } else if (mode === 3) {
-    text("Modus 3: Bild 1 mit Bild 2 und Maske", 20, height - 40);
+    modeText = "StadtZukunft";
+  } else {
+    modeText = "Blick in die Zukunft";
   }
+
+  fill(0, 150);
+  rect(20, 20, textWidth(modeText) + 20, 40, 10);
+  fill(255);
+  textSize(20);
+  textLeading(10);
+  text(modeText, 30, 45);
 }
 
 // Funktion zum Zeichnen des Hilfetexts
 function drawHelpText() {
-  textSize(18);
+  let helpText = "1: StadtGegenwart\n2: StadtZukunft\n3: Blick in die Zukunft\nH: Hilfe ein/aus";
+  fill(0, 150);
+  rect(20, height - 110, 300, 100, 10);
+  fill(255);
+  textSize(20);
+  textLeading(24);
+  text(helpText, 30, height - 90);
+
+  fill(0, 150);
+  rect(width - 165, 20, 160, 40, 10);
+  fill(255);
+  textSize(20);
+  textLeading(24);
+  text("Esc zum beenden", width - 155, 45);
   fill(0);
-  noStroke();
-  textAlign(LEFT, TOP);
-  text("Hilfe:\n- Taste '1': Bild 1 anzeigen\n- Taste '2': Bild 2 anzeigen\n- Taste '3': Modus 3\n- Bewege die Maus, um den transparenten Bereich zu steuern\n- Taste 'H': Hilfe ein/ausblenden", 20, 20);
+  text("Gianluca Gontow", width - 160, height - 10);
 }
 
 function keyPressed() {
