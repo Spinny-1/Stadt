@@ -27,14 +27,12 @@ function draw() {
 
     // Erstelle eine Maske für Bild 1
     let maskImg = createGraphics(width, height);  // Neue Maske erstellen
-    maskImg.beginDraw();
-    maskImg.background(0);  // Schwarzer Hintergrund (unsichtbar)
+    maskImg.clear();  // Alte Zeichnungen löschen
     maskImg.fill(255);  // Weiße Farbe für den Bereich, der sichtbar bleibt
     maskImg.noStroke();
     maskImg.ellipse(mouseX, mouseY, ellipseSize, ellipseSize);  // Ellipse an der Mausposition
-    maskImg.endDraw();
 
-    // Wende die Maske auf Bild 1 an, sodass der Bereich des Kreises durch Bild 2 ersetzt wird
+    // Wende die Maske auf Bild 1 an
     image1.mask(maskImg);  // Maskiere Bild 1 mit der Maske
 
     // Bild 1 anzeigen, aber mit der Maske angewendet
