@@ -30,9 +30,10 @@ function draw() {
   } else if (mode === 3) {
     // Modus 3: Bild 1 im Hintergrund und Bild 2 immer sichtbar
     image(image2, 0, 0);  // Bild 2 im Hintergrund
-
+    
     // Temporäre Maske im PGraphics bearbeiten
-    pg.image(image1, 0, 0);  // Originalbild zurückladen, um den Zustand zu resetten
+    pg.clear();
+    pg.image(image1, 0, 0, width, height);  // Originalbild zurückladen, um den Zustand zu resetten
     pg.loadPixels();  // Lade die Pixel des temporären Bildes
 
     // Berechne nur den Bereich um die Maus herum
@@ -46,7 +47,7 @@ function draw() {
         let d = dist(x, y, mouseX, mouseY);  // Berechne den Abstand zum Mauszeiger
         let index = (x + y * width) * 4;  // Berechne den Pixel-Index
 
-        if (d < maskSize / 2) {
+        if (d < / 2) {
           // Innerhalb des Radius: Setze den Alpha-Wert auf 0 (transparent)
           pg.pixels[index + 3] = 0;
         }
