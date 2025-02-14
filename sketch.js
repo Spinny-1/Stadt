@@ -98,9 +98,6 @@ function drawHelpText() {
   textSize(20);
   textLeading(24);
   text(helpText, 30, height - 90);
-
-  fill(0, 150);
-  rect(width - 165, 20, 160, 40, 10);
 }
 
 function keyPressed() {
