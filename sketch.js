@@ -11,6 +11,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);  // Leinwand erstellen
+  pixelDensity(1);
   image1.resize(width, height);  // Bild 1 skalieren
   image2.resize(width, height);  // Bild 2 skalieren
 
