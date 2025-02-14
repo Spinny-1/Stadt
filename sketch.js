@@ -100,10 +100,10 @@ function drawHelpText() {
   textLeading(24);
   text(helpText, 30, height - 90);
   fill(0, 150);
-  rect(width - 160, height - 110, 150, height - 120, 10);
+  rect(width - 160, 20, 150, 40, 10);
   fill(255);
   textSize(20);
-   text("F11 Vollbild", width - 160, height - 110);
+   text("F11 Vollbild", width - 150, 30);
 }
 
 function keyPressed() {
