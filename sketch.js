@@ -1,6 +1,6 @@
 let image1, image2;
 let mode = 1;  // Modus-Variable: 1 = Bild 1, 2 = Bild 2, 3 = Modus 3
-let maskSize = 200;  // Größe der Maske, um Bild 1 transparent zu machen
+let maskSize = 150;  // Größe der Maske, um Bild 1 transparent zu machen
 let pg;
 
 function preload() {
@@ -15,8 +15,6 @@ function setup() {
 
   pg = createGraphics(width, height);  // PGraphics für temporäre Bearbeitung
   pg.image(image1, 0, 0);  // Bild 1 in PGraphics laden
-
-  noCursor();
 }
 
 function draw() {
@@ -31,7 +29,6 @@ function draw() {
     image(image2, 0, 0);  // Bild 2 im Hintergrund
 
     // Temporäre Maske im PGraphics bearbeiten
-    pg.image(image1, 0, 0);  // Originalbild zurückladen, um den Zustand zu resetten
     pg.loadPixels();  // Lade die Pixel des temporären Bildes
 
     // Berechne nur den Bereich um die Maus herum
@@ -46,15 +43,16 @@ function draw() {
         let index = (x + y * width) * 4;  // Berechne den Pixel-Index
 
         if (d < maskSize / 2) {
-          // Innerhalb des Radius: Setze den Alpha-Wert auf 0 (transparent)
-          pg.pixels[index + 3] = 0;
+          // Berechne die Transparenz basierend auf der Entfernung
+          let alpha = map(d, 0, maskSize / 2, 255, 0);
+          pg.pixels[index + 3] = alpha;  // Setze den Alpha-Wert
         }
       }
     }
 
     pg.updatePixels();  // Update der Pixel des temporären Bildes
 
-    // Zeichne das temporäre Bild mit der Transparenz
+    // Zeichne das temporäre Bild mit der weichen Transparenz
     image(pg, 0, 0);
   }
 }
