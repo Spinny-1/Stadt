@@ -83,6 +83,10 @@ function drawModeText() {
   textSize(20);
   textLeading(10);
   text(modeText, 30, 45);
+   textSize(20);
+  textLeading(24);
+  fill(0);
+  text("Gianluca Gontow", width - 160, height - 10);
 }
 
 // Funktion zum Zeichnen des Hilfetexts
@@ -97,10 +101,6 @@ function drawHelpText() {
 
   fill(0, 150);
   rect(width - 165, 20, 160, 40, 10);
-  textSize(20);
-  textLeading(24);
-  fill(0);
-  text("Gianluca Gontow", width - 160, height - 10);
 }
 
 function keyPressed() {
