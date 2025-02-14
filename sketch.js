@@ -97,10 +97,8 @@ function drawHelpText() {
 
   fill(0, 150);
   rect(width - 165, 20, 160, 40, 10);
-  fill(255);
   textSize(20);
   textLeading(24);
-  text("Esc zum beenden", width - 155, 45);
   fill(0);
   text("Gianluca Gontow", width - 160, height - 10);
 }
