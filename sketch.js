@@ -3,7 +3,6 @@ let mode = 1;  // Modus-Variable: 1 = Bild 1, 2 = Bild 2, 3 = Modus 3
 let maskSize = 200;  // Größe der Maske, um Bild 1 transparent zu machen
 let pg;
 let showHelp = false;  // Flag für das Ein- und Ausblenden der Hilfe
-let isFullscreen = false; // Flag, um den Vollbildmodus zu erkennen
 
 function preload() {
   image1 = loadImage("StadtPast.png");  // Bild 1 laden
@@ -112,9 +111,6 @@ function keyPressed() {
   } else if (key === 'h' || key === 'H') {
     showHelp = !showHelp;  // Hilfe ein- oder ausblenden
   } else if (keyCode === 122) {  // F11-Taste
-    isFullscreen = !isFullscreen;  // Toggle Fullscreen
-    let fs = isFullscreen ? fullscreen() : false;  // Setze den richtigen Modus
-    fullscreen(fs);  // Vollbildmodus aktivieren/deaktivieren
     resizeCanvas(windowWidth, windowHeight);  // Canvas-Größe neu anpassen
     image1.resize(width, height);  // Bilder neu skalieren
     image2.resize(width, height);  // Bilder neu skalieren
