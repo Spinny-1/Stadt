@@ -99,6 +99,11 @@ function drawHelpText() {
   textSize(20);
   textLeading(24);
   text(helpText, 30, height - 90);
+  fill(0, 150);
+  rect(width - 160, height - 110, 150, height - 120, 10);
+  fill(255);
+  textSize(20);
+   text("F11 Vollbild", width - 160, height - 110);
 }
 
 function keyPressed() {
@@ -118,6 +123,6 @@ function keyPressed() {
       image2.resize(width, height);  // Bilder neu skalieren
       pg = createGraphics(width, height);  // PGraphics neu erstellen
       pg.image(image1, 0, 0);  // Bild 1 in PGraphics neu laden
-    }, 500);  // 2000 ms = 2 Sekunden
+    }, 1000);  // 2000 ms = 2 Sekunden
   }
 }
