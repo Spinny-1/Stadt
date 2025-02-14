@@ -3,6 +3,7 @@ let mode = 1;  // Modus-Variable: 1 = Bild 1, 2 = Bild 2, 3 = Modus 3
 let maskSize = 250;  // Größe der Maske, um Bild 1 transparent zu machen
 let pg;
 let showHelp = false;  // Flag für das Ein- und Ausblenden der Hilfe
+let baseWidth = 1920, baseHeight = 1080;
 
 function preload() {
   image1 = loadImage("StadtPast.png");  // Bild 1 laden
@@ -10,20 +11,14 @@ function preload() {
 }
 
 function setup() {
-  let targetAspect = 1920 / 1080;
-  let screenAspect = windowWidth / windowHeight;
-  let canvasWidth, canvasHeight;
-
-  if (screenAspect > targetAspect) {
-    canvasHeight = windowHeight;
-    canvasWidth = canvasHeight * targetAspect;
-  } else {
-    canvasWidth = windowWidth;
-    canvasHeight = canvasWidth / targetAspect;
+  let aspectRatio = baseWidth / baseHeight;
+  let newWidth = windowWidth;
+  let newHeight = windowWidth / aspectRatio;
+  if (newHeight > windowHeight) {
+    newHeight = windowHeight;
+    newWidth = windowHeight * aspectRatio;
   }
-
-  createCanvas(canvasWidth, canvasHeight);
-
+  createCanvas(newWidth, newHeight);  // Leinwand erstellen
   image1.resize(width, height);  // Bild 1 skalieren
   image2.resize(width, height);  // Bild 2 skalieren
 
@@ -36,50 +31,47 @@ function setup() {
 function draw() {
   background(255);  // Hintergrund auf weiß setzen
 
+  let scaleX = width / baseWidth;
+  let scaleY = height / baseHeight;
+  let mouseXAdj = mouseX / scaleX;
+  let mouseYAdj = mouseY / scaleY;
+
   if (mode === 1) {
     image(image1, 0, 0);  // Modus 1: Bild 1 anzeigen
   } else if (mode === 2) {
     image(image2, 0, 0);  // Modus 2: Bild 2 anzeigen
   } else if (mode === 3) {
-    // Modus 3: Bild 1 im Hintergrund und Bild 2 immer sichtbar
     image(image2, 0, 0);  // Bild 2 im Hintergrund
 
-    // Temporäre Maske im PGraphics bearbeiten
     pg.image(image1, 0, 0);  // Originalbild zurückladen, um den Zustand zu resetten
     pg.loadPixels();  // Lade die Pixel des temporären Bildes
 
-    // Berechne nur den Bereich um die Maus herum
-    let startX = max(mouseX - maskSize / 2, 0);
-    let endX = min(mouseX + maskSize / 2, width);
-    let startY = max(mouseY - maskSize / 2, 0);
-    let endY = min(mouseY + maskSize / 2, height);
+    let startX = max(mouseXAdj - maskSize / 2, 0);
+    let endX = min(mouseXAdj + maskSize / 2, width);
+    let startY = max(mouseYAdj - maskSize / 2, 0);
+    let endY = min(mouseYAdj + maskSize / 2, height);
 
     for (let x = startX; x < endX; x++) {
       for (let y = startY; y < endY; y++) {
-        let d = dist(x, y, mouseX, mouseY);  // Berechne den Abstand zum Mauszeiger
+        let d = dist(x, y, mouseXAdj, mouseYAdj);  // Berechne den Abstand zum Mauszeiger
         let index = (x + y * width) * 4;  // Berechne den Pixel-Index
 
         if (d < maskSize / 2) {
-          // Innerhalb des Radius: Setze den Alpha-Wert auf 0 (transparent)
           pg.pixels[index + 3] = 0;
         }
       }
     }
 
     pg.updatePixels();  // Update der Pixel des temporären Bildes
-
-    // Zeichne das temporäre Bild mit der Transparenz
     image(pg, 0, 0);
   }
 
-  // Hilfe und Modus-Text zeichnen
   drawModeText();
   if (!showHelp) {
     drawHelpText();
   }
 }
 
-// Funktion zum Zeichnen des Modus-Texts
 function drawModeText() {
   let modeText = "";
   if (mode === 1) {
@@ -96,13 +88,12 @@ function drawModeText() {
   textSize(20);
   textLeading(10);
   text(modeText, 30, 45);
-   textSize(20);
+  textSize(20);
   textLeading(24);
   fill(0);
   text("Gianluca Gontow", width - 160, height - 10);
 }
 
-// Funktion zum Zeichnen des Hilfetexts
 function drawHelpText() {
   let helpText = "1: StadtGegenwart\n2: StadtZukunft\n3: Blick in die Zukunft\nH: Hilfe ein/aus";
   fill(0, 150);
@@ -115,12 +106,12 @@ function drawHelpText() {
 
 function keyPressed() {
   if (key === '1') {
-    mode = 1;  // In Modus 1 wechseln (Bild 1)
+    mode = 1;
   } else if (key === '2') {
-    mode = 2;  // In Modus 2 wechseln (Bild 2)
+    mode = 2;
   } else if (key === '3') {
-    mode = 3;  // In Modus 3 wechseln (Bild 1 und Bild 2 an Mausposition)
+    mode = 3;
   } else if (key === 'h' || key === 'H') {
-    showHelp = !showHelp;  // Hilfe ein- oder ausblenden
+    showHelp = !showHelp;
   }
 }
