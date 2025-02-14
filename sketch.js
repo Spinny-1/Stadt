@@ -18,6 +18,10 @@ function setup() {
   pg.image(image1, 0, 0);  // Bild 1 in PGraphics laden
   
   noCursor();  // Mauszeiger ausblenden
+  console.log("Canvas Size:", width, height);
+console.log("Mouse Position:", mouseX, mouseY);
+console.log("Pixel Density:", pixelDensity());
+
 }
 
 function draw() {
