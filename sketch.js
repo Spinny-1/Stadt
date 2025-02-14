@@ -3,7 +3,6 @@ let mode = 1;  // Modus-Variable: 1 = Bild 1, 2 = Bild 2, 3 = Modus 3
 let maskSize = 250;  // Größe der Maske, um Bild 1 transparent zu machen
 let pg;
 let showHelp = false;  // Flag für das Ein- und Ausblenden der Hilfe
-let scaleFactor;  // Pixeldichte-Faktor
 
 function preload() {
   image1 = loadImage("StadtPast.png");  // Bild 1 laden
@@ -12,7 +11,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);  // Leinwand erstellen
-  scaleFactor = pixelDensity();  // Pixeldichte abrufen (1 oder 2)
+  pixelDensity(1);
   image1.resize(width, height);  // Bild 1 skalieren
   image2.resize(width, height);  // Bild 2 skalieren
 
@@ -21,7 +20,7 @@ function setup() {
   
   noCursor();  // Mauszeiger ausblenden
   console.log("Canvas Size:", width, height);
-  console.log("Pixel Density:", pixelDensity());
+console.log("Pixel Density:", pixelDensity());
 }
 
 function draw() {
@@ -41,14 +40,14 @@ function draw() {
     pg.loadPixels();  // Lade die Pixel des temporären Bildes
 
     // Berechne nur den Bereich um die Maus herum
-    let startX = max(mouseX * scaleFactor - maskSize * scaleFactor / 2, 0);
-    let endX = min(mouseX * scaleFactor + maskSize * scaleFactor / 2, width * scaleFactor);
-    let startY = max(mouseY * scaleFactor - maskSize * scaleFactor / 2, 0);
-    let endY = min(mouseY * scaleFactor + maskSize * scaleFactor / 2, height * scaleFactor);
+    let startX = max(mouseX - maskSize / 2, 0);
+    let endX = min(mouseX + maskSize / 2, width);
+    let startY = max(mouseY - maskSize / 2, 0);
+    let endY = min(mouseY + maskSize / 2, height);
 
     for (let x = startX; x < endX; x++) {
       for (let y = startY; y < endY; y++) {
-        let d = dist(x / scaleFactor, y / scaleFactor, mouseX, mouseY);  // Berechne den Abstand zum Mauszeiger
+        let d = dist(x, y, mouseX, mouseY);  // Berechne den Abstand zum Mauszeiger
         let index = (x + y * width) * 4;  // Berechne den Pixel-Index
 
         if (d < maskSize / 2) {
@@ -88,7 +87,7 @@ function drawModeText() {
   textSize(20);
   textLeading(10);
   text(modeText, 30, 45);
-  textSize(20);
+   textSize(20);
   textLeading(24);
   fill(0);
   text("Gianluca Gontow", width - 160, height - 10);
