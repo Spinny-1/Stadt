@@ -1,6 +1,6 @@
 let image1, image2;
 let mode = 1;  // Modus-Variable: 1 = Bild 1, 2 = Bild 2, 3 = Modus 3
-let maskSize = 150;  // Größe der Maske, um Bild 1 transparent zu machen
+let maskSize = 200;  // Größe der Maske, um Bild 1 transparent zu machen
 let pg;
 
 function preload() {
@@ -15,6 +15,8 @@ function setup() {
 
   pg = createGraphics(width, height);  // PGraphics für temporäre Bearbeitung
   pg.image(image1, 0, 0);  // Bild 1 in PGraphics laden
+
+  noCursor();
 }
 
 function draw() {
