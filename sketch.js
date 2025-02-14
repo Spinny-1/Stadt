@@ -52,10 +52,8 @@ function draw() {
     maskImg.updatePixels();  // Maske anwenden
 
     // Wende die Maske auf Bild 1 an, sodass es transparent wird an der Mausposition
-    image(image1, 0, 0);  // Bild 1 noch einmal zeichnen
     image(image2, 0, 0);  // Bild 2 im Hintergrund
-    image(image1, 0, 0);  // Bild 1 noch einmal zeichnen
-    image(image2, 0, 0);
+    image(image1, 0, 0);  // Bild 1 noch einmal zeichnen, aber mit der Maske
   }
 }
 
