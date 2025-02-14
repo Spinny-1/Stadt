@@ -23,24 +23,25 @@ function draw() {
   } else if (mode === 3) {
     // Modus 3: Bild 1 im Hintergrund und Bild 2 immer sichtbar
     image(image2, 0, 0);  // Bild 2 im Hintergrund
-    image(image1, 0, 0);  // Bild 1 darüber
 
-    // Temporäre Bearbeitung der Pixel in der Nähe der Maus
-    loadPixels();  // Die Leinwand-Pixel laden, auf denen wir die Maske anwenden werden
+    // Bild 1 temporär bearbeiten, um Transparenz zu setzen
+    image1.loadPixels();  // Lade die Pixel von Bild 1
+
     for (let x = mouseX - maskSize / 2; x < mouseX + maskSize / 2; x++) {
       for (let y = mouseY - maskSize / 2; y < mouseY + maskSize / 2; y++) {
         let d = dist(x, y, mouseX, mouseY);  // Berechne den Abstand zum Mauszeiger
         if (d < maskSize / 2 && x >= 0 && x < width && y >= 0 && y < height) {
           let index = (x + y * width) * 4;  // Berechne den Pixel-Index
-          // Setze den Alpha-Wert der Pixel temporär auf 0 (transparente Stelle)
-          pixels[index + 3] = 0;  // Transparenz setzen
+          image1.pixels[index + 3] = 0;  // Setze den Alpha-Wert auf 0 (transparent)
         }
       }
     }
 
-    updatePixels();  // Update die Leinwand-Pixel mit den Änderungen
+    image1.updatePixels();  // Update die Pixel von Bild 1
 
-    image(image1, 0, 0);  // Bild 1 erneut zeichnen (nun mit temporärer Transparenz an der Mausposition)
+    image(image1, 0, 0);  // Zeichne Bild 1 mit der temporären Transparenz
+
+    // Bild 1 ist jetzt mit transparenter Stelle bei der Mausposition, aber wir müssen keine weiteren Änderungen an image1 vornehmen.
   }
 }
 
