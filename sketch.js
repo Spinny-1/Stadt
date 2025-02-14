@@ -1,7 +1,7 @@
 let image1, image2;
 let mode = 1;  // Modus-Variable: 1 = Bild 1, 2 = Bild 2, 3 = Modus 3
 let maskSize = 150;  // Größe der Maske, um Bild 1 transparent zu machen
-let tempImage;
+let pg;
 
 function preload() {
   image1 = loadImage("StadtPast.png");  // Bild 1 laden
@@ -13,7 +13,8 @@ function setup() {
   image1.resize(width, height);  // Bild 1 skalieren
   image2.resize(width, height);  // Bild 2 skalieren
 
-  tempImage = createImage(width, height);  // Temporäres Bild erstellen
+  pg = createGraphics(width, height);  // PGraphics für temporäre Bearbeitung
+  pg.image(image1, 0, 0);  // Bild 1 in PGraphics laden
 }
 
 function draw() {
@@ -27,30 +28,31 @@ function draw() {
     // Modus 3: Bild 1 im Hintergrund und Bild 2 immer sichtbar
     image(image2, 0, 0);  // Bild 2 im Hintergrund
 
-    // Temporäres Bild (Maske) mit dem Bild 1 laden
-    tempImage.copy(image1, 0, 0, width, height, 0, 0, width, height);
+    // Temporäre Maske im PGraphics bearbeiten
+    pg.loadPixels();  // Lade die Pixel des temporären Bildes
 
-    tempImage.loadPixels();  // Lade die Pixel des temporären Bildes
+    // Berechne nur den Bereich um die Maus herum
+    let startX = max(mouseX - maskSize / 2, 0);
+    let endX = min(mouseX + maskSize / 2, width);
+    let startY = max(mouseY - maskSize / 2, 0);
+    let endY = min(mouseY + maskSize / 2, height);
 
-    for (let x = 0; x < width; x++) {
-      for (let y = 0; y < height; y++) {
+    for (let x = startX; x < endX; x++) {
+      for (let y = startY; y < endY; y++) {
         let d = dist(x, y, mouseX, mouseY);  // Berechne den Abstand zum Mauszeiger
         let index = (x + y * width) * 4;  // Berechne den Pixel-Index
 
         if (d < maskSize / 2) {
           // Innerhalb des Radius: Setze den Alpha-Wert auf 0 (transparent)
-          tempImage.pixels[index + 3] = 0;
-        } else {
-          // Außerhalb des Radius: Behalte die Transparenz bei
-          tempImage.pixels[index + 3] = 255;  // oder 255 für vollen Alpha-Wert (undurchsichtig)
+          pg.pixels[index + 3] = 0;
         }
       }
     }
 
-    tempImage.updatePixels();  // Update der Pixel des temporären Bildes
+    pg.updatePixels();  // Update der Pixel des temporären Bildes
 
-    // Zeichne das temporäre Bild, das die Transparenz an der Mausposition hat
-    image(tempImage, 0, 0);
+    // Zeichne das temporäre Bild mit der Transparenz
+    image(pg, 0, 0);
   }
 }
 
